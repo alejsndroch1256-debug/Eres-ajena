@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Feliz cumpleaños Melissa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Rajdhani', sans-serif;
+      background:#05070b;
+      color:#eaeaea;
+      overflow-x:hidden;
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    section{
+      padding:90px 20px;
+    }
+
+    /* ================= HERO ================= */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-container{
+      max-width:1300px;
+      width:100%;
+      margin:auto;
+      display:grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      align-items:center;
+      gap:30px;
+    }
+
+    .hero-text{
+      text-align:center;
+      z-index:2;
+    }
+
+    .hero-text h1{
+      font-size:clamp(36px,6vw,72px);
+      line-height:1.1;
+    }
+
+    .hero-text h1 span{
+      color:#5eead4;
+    }
+
+    .hero-text p{
+      margin:20px 0 30px;
+      color:#bdbdbd;
+      font-size:18px;
+    }
+
+    .hero-text button{
+      padding:12px 30px;
+      background:#5eead4;
+      color:#000;
+      border:none;
+      font-size:16px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+
+    /* GIFS LATERALES */
+    .hero-left,
+    .hero-right{
+      display:flex;
+      justify-content:center;
+    }
+
+    .hero-left img,
+    .hero-right img{
+      max-width:260px;
+      width:100%;
+      height:auto;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+    }
+
+    /* ================= MENSAJE ================= */
+    .message{
+      max-width:950px;
+      margin:auto;
+    }
+
+    .message h2{
+      font-size:32px;
+      margin-bottom:20px;
+    }
+
+    .message-box{
+      background:rgba(255,255,255,0.06);
+      padding:35px;
+      border-radius:14px;
+      line-height:1.7;
+    }
+
+    .message-box p{
+      margin-bottom:18px;
+      color:#e0e0e0;
+      white-space:pre-line;
+    }
+
+    /* ================= GIFS INFERIORES ================= */
+    .bottom-gifs{
+      display:flex;
+      justify-content:center;
+      gap:40px;
+      margin:80px 0 120px;
+    }
+
+    .bottom-gifs img{
+      max-width:300px;
+      width:100%;
+      height:auto;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 900px){
+      .hero-container{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+
+      .hero-left,
+      .hero-right{
+        margin-top:30px;
+      }
+
+      .bottom-gifs{
+        flex-direction:column;
+        align-items:center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CONFETI -->
+  <canvas id="bg"></canvas>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-container">
+
+      <!-- IZQUIERDA -->
+      <div class="hero-left">
+        <img src="assets/as.gif" alt="as">
+      </div>
+
+      <!-- TEXTO -->
+      <div class="hero-text">
+        <h1>
+          <span>Feliz cumpleaños Melissa</span>
+        </h1>
+
+        <p>
+          Hoy te felicito en este día<br>
+          y la pases bien! :D
+        </p>
+
+        <button id="goMessage">Comenzar</button>
+      </div>
+
+      <!-- DERECHA -->
+      <div class="hero-right">
+        <img src="assets/leonkennedy.gif" alt="Leon Kennedy">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MENSAJE ================= -->
+  <section class="message" id="message">
+    <h2>Mensaje</h2>
+
+    <div class="message-box">
+      <p>
+Hoy en este día cumples un año más se que estamos distantes pero eso no significa que no te felicite.
+
+Este mensaje lo hice para demostrar que aún te considero mi amiga o mi real como lo quieras ver pero igual. Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mi. me has apoyado en muchos momentos que no se como agradecertelo.
+
+Feliz cumpleaños, Melissa.
+
+De parte de Alejandro.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= GIFS ABAJO ================= -->
+  <div class="bottom-gifs">
+    <img src="assets/leonkennedys.gif" alt="Leon extra">
+    <img src="assets/xd.gif" alt="xd">
+  </div>
+
+  <!-- ================= JS CONFETI ================= -->
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    const colors = [
+      "#ff4d6d", "#ffd166", "#06d6a0",
+      "#4cc9f0", "#f72585", "#b5179e"
+    ];
+
+    const confetti = [];
+    const CONFETTI_COUNT = 200;
+
+    for(let i=0;i<CONFETTI_COUNT;i++){
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 6 + 4,
+        speed: Math.random() * 2 + 1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotationSpeed: Math.random() * 4 - 2
+      });
+    }
+
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      confetti.forEach(c => {
+        ctx.save();
+        ctx.translate(c.x, c.y);
+        ctx.rotate(c.rotation * Math.PI / 180);
+        ctx.fillStyle = c.color;
+        ctx.fillRect(-c.size/2, -c.size/2, c.size, c.size);
+        ctx.restore();
+
+        c.y += c.speed;
+        c.rotation += c.rotationSpeed;
+
+        if(c.y > canvas.height + 10){
+          c.y = -10;
+          c.x = Math.random() * canvas.width;
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    document.getElementById("goMessage").onclick = ()=>{
+      document.getElementById("message")
+        .scrollIntoView({behavior:"smooth"});
+    };
+  </script>
+
+</body>
+</html>
