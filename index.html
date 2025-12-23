@@ -11,27 +11,49 @@ body{
     min-height:100vh;
     background:#000;
     color:white;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
     font-family:Arial, sans-serif;
     text-align:center;
+    padding:40px 20px;
 }
 
 h1{
     color:#6fffe9;
     font-size:3rem;
+    margin-bottom:10px;
+}
+
+h2{
+    color:#6fffe9;
+    margin-top:60px;
 }
 
 p{
-    opacity:0.8;
+    opacity:0.85;
+    max-width:800px;
+    margin:10px auto;
+    line-height:1.6;
 }
 
+button{
+    margin-top:20px;
+    padding:12px 30px;
+    border:none;
+    border-radius:8px;
+    background:#6fffe9;
+    color:#000;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.85;
+}
+
+/* GIFS */
 .gifs{
     display:flex;
     gap:20px;
-    margin-top:30px;
+    margin-top:40px;
     flex-wrap:wrap;
     justify-content:center;
 }
@@ -39,19 +61,55 @@ p{
 .gifs img{
     width:180px;
 }
+
+/* RECUERDOS */
+.recuerdos{
+    margin-top:60px;
+}
 </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <h1>Feliz cumpleaños Melissa</h1>
-<p>Hoy te felicito en este día y lo pases bien :D</p>
+<p>Hoy te felicito en este día<br>y lo pases bien :D</p>
 
+<button>Comenzar</button>
+
+<!-- GIFS -->
 <div class="gifs">
     <img src="assets/as.gif" alt="as">
     <img src="assets/leonkennedy.gif" alt="leon">
-    <img src="assets/leonkennedys.gif" alt="leon2">
+    <img src="assets/leonkennedys.gif" alt="leon abajo">
     <img src="assets/xd.gif" alt="xd">
+</div>
+
+<!-- MENSAJE -->
+<h2>Mensaje</h2>
+
+<p>
+Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa que no te felicite.
+</p>
+
+<p>
+Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real, como lo quieras ver,
+pero igual. Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mí.
+Me has apoyado en muchos momentos que no sé cómo agradecértelo.
+</p>
+
+<p>
+Feliz cumpleaños, Melissa.
+</p>
+
+<p>
+De parte de Alejandro.
+</p>
+
+<!-- RECUERDOS -->
+<div class="recuerdos">
+    <h2>Recuerdos</h2>
+    <p>Aquí luego puedes agregar fotos o videos.</p>
 </div>
 
 </body>
