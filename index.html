@@ -3,20 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feliz cumpleaños Melissa</title>
+<title>Feliz cumpleaños Melissa 🎉</title>
 
 <style>
-/* ================= BASE ================= */
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
     background:#000;
     color:#fff;
-    font-family:Arial, sans-serif;
+    font-family:'Trebuchet MS', Arial, sans-serif;
     text-align:center;
     overflow-x:hidden;
 }
@@ -28,105 +23,102 @@ body{
     pointer-events:none;
     z-index:1;
 }
-
 .confetti span{
     position:absolute;
-    width:8px;
-    height:8px;
+    width:10px;
+    height:10px;
+    opacity:.9;
     animation:fall linear infinite;
 }
-
 @keyframes fall{
-    from{ transform:translateY(-10vh) rotate(0deg); }
-    to{ transform:translateY(110vh) rotate(360deg); }
+    from{transform:translateY(-10vh) rotate(0deg);}
+    to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ================= DECORACIONES ================= */
+.decor{
+    position:absolute;
+    font-size:40px;
+    animation:float 6s ease-in-out infinite;
+}
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
 }
 
 /* ================= CONTENIDO ================= */
 main{
     position:relative;
     z-index:2;
-    padding:80px 20px;
+    padding:90px 20px;
 }
 
 h1{
-    font-size:3rem;
+    font-size:3.2rem;
     color:#6fffe9;
-    text-shadow:0 0 15px #6fffe9;
+    text-shadow:0 0 18px #6fffe9;
     margin-bottom:15px;
 }
 
 .subtitle{
-    opacity:.8;
-    margin-bottom:25px;
-}
-
-button{
-    background:#6fffe9;
-    color:#000;
-    border:none;
-    padding:12px 28px;
-    border-radius:10px;
-    font-size:1rem;
-    cursor:pointer;
+    opacity:.85;
+    font-size:1.1rem;
 }
 
 /* ================= GIFS ================= */
-.gif{
-    position:absolute;
-    width:180px;
+.top-gifs{
+    display:flex;
+    justify-content:space-between;
+    max-width:1100px;
+    margin:60px auto 40px;
 }
-
-.gif.left{ left:20px; top:40%; }
-.gif.right{ right:20px; top:40%; }
+.top-gifs img{
+    width:170px;
+}
 
 .bottom-gifs{
     display:flex;
     justify-content:center;
-    gap:30px;
+    gap:40px;
     margin:60px 0;
 }
-
 .bottom-gifs img{
-    width:220px;
-    border-radius:12px;
+    width:260px;
+    border-radius:14px;
 }
 
 /* ================= MENSAJE ================= */
-.message-box{
+.card{
     max-width:900px;
     margin:0 auto 80px;
     padding:35px;
-    background:rgba(255,255,255,0.06);
-    border-radius:20px;
+    background:rgba(255,255,255,0.07);
+    border-radius:22px;
     backdrop-filter:blur(6px);
 }
-
-.message-box h2{
+.card h2{
     color:#6fffe9;
     margin-bottom:20px;
 }
+.card p{
+    line-height:1.7;
+    opacity:.95;
+}
 
-/* ================= RESPONSIVE (CELULAR) ================= */
+/* ================= MOBILE ================= */
 @media(max-width:768px){
-
-    h1{ font-size:2.2rem; }
-
-    .gif{
-        position:static;
-        width:130px;
-        margin:20px auto;
-        display:block;
-    }
-
-    .bottom-gifs{
+    h1{font-size:2.4rem;}
+    .top-gifs{
         flex-direction:column;
         align-items:center;
         gap:20px;
     }
-
-    .bottom-gifs img{
-        width:260px;
+    .top-gifs img{width:140px;}
+    .bottom-gifs{
+        flex-direction:column;
+        gap:25px;
     }
+    .bottom-gifs img{width:240px;}
 }
 </style>
 </head>
@@ -136,52 +128,62 @@ button{
 <!-- CONFETI -->
 <div class="confetti" id="confetti"></div>
 
-<!-- GIFS LATERALES -->
-<img src="as.gif" class="gif left" alt="Leon izquierda">
-<img src="leonkennedy.gif" class="gif right" alt="Leon derecha">
+<!-- EMOJIS DECORATIVOS -->
+<div class="decor" style="top:40px;left:20px;">🎈</div>
+<div class="decor" style="top:120px;right:30px;">🎁</div>
+<div class="decor" style="bottom:120px;left:40px;">🎉</div>
+<div class="decor" style="bottom:80px;right:50px;">🎂</div>
 
 <main>
+
     <h1>Feliz cumpleaños Melissa</h1>
-    <p class="subtitle">Hoy te felicito en este día<br>y lo pases bien :D</p>
+    <p class="subtitle">
+        Hoy te felicito en este día<br>
+        y espero que lo pases increíble 💖
+    </p>
 
-    <button>Comenzar</button>
-
-    <!-- GIFS ABAJO -->
-    <div class="bottom-gifs">
-        <img src="leonkennedys.gif" alt="Leon abajo">
-        <img src="xd.gif" alt="Leon abajo 2">
+    <!-- GIFS SUPERIORES -->
+    <div class="top-gifs">
+        <img src="as.gif" alt="Leon izquierda">
+        <img src="leonkennedy.gif" alt="Leon derecha">
     </div>
 
     <!-- MENSAJE -->
-    <div class="message-box">
+    <div class="card">
         <h2>Mensaje</h2>
         <p>
-            Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa que no te felicite.
+            Hoy en este día cumples un año más, sé que estamos distantes,
+            pero eso no significa que no te felicite.
             <br><br>
-            Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real, como lo quieras ver, pero igual.
-            Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mí.
+            Este mensaje lo hice para demostrar que aún te considero
+            una persona muy especial para mí.
             <br><br>
-            Me has apoyado en muchos momentos que no sé cómo agradecértelo.
+            Me has apoyado en muchos momentos que no sé cómo agradecerte.
             <br><br>
-            <strong>Feliz cumpleaños, Melissa.</strong>
-            <br><br>
+            <strong>Feliz cumpleaños, Melissa.</strong><br>
             De parte de Alejandro.
         </p>
     </div>
+
+    <!-- GIFS INFERIORES -->
+    <div class="bottom-gifs">
+        <img src="leonkennedys.gif" alt="Leon abajo">
+        <img src="xd.gif" alt="Leon divertido">
+    </div>
+
 </main>
 
 <script>
-/* CONFETI JS */
-const confetti = document.getElementById("confetti");
-const colors = ["#6fffe9","#ff5fa2","#ffd166","#9b5de5","#00f5d4"];
+/* CONFETI */
+const confetti=document.getElementById("confetti");
+const colors=["#6fffe9","#ff6fae","#ffd166","#9b5de5","#00f5d4"];
 
-for(let i=0;i<120;i++){
-    const s = document.createElement("span");
-    s.style.left = Math.random()*100+"vw";
-    s.style.background = colors[Math.floor(Math.random()*colors.length)];
-    s.style.animationDuration = 3+Math.random()*4+"s";
-    s.style.opacity = Math.random();
-    confetti.appendChild(s);
+for(let i=0;i<140;i++){
+    const c=document.createElement("span");
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=3+Math.random()*5+"s";
+    confetti.appendChild(c);
 }
 </script>
 
