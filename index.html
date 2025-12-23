@@ -6,72 +6,100 @@
 <title>Feliz cumpleaños Melissa</title>
 
 <style>
+/* ===== RESET ===== */
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
+/* ===== BODY ===== */
 body{
-    margin:0;
     min-height:100vh;
     background:#000;
-    color:#fff;
+    color:white;
     font-family:Arial, Helvetica, sans-serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
     text-align:center;
-    padding:40px 20px;
+    overflow-x:hidden;
 }
 
-/* TITULO */
-h1{
+/* ===== CONFETI ===== */
+.confetti{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+}
+
+.confetti span{
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:var(--c);
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{ transform:translateY(-10px) rotate(0deg); }
+    to{ transform:translateY(110vh) rotate(360deg); }
+}
+
+/* ===== HERO ===== */
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    z-index:2;
+    padding:20px;
+}
+
+.hero h1{
     color:#6fffe9;
     font-size:3rem;
     margin-bottom:10px;
 }
 
-/* SUBTEXTO */
-.subtitle{
+.hero p{
     opacity:0.8;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
-/* BOTON */
-button{
+.hero button{
     background:#6fffe9;
     border:none;
-    color:#000;
-    padding:12px 26px;
+    padding:12px 30px;
+    border-radius:12px;
     font-size:1rem;
-    border-radius:8px;
     cursor:pointer;
 }
 
-button:hover{
-    opacity:0.85;
-}
-
-/* GIFS */
+/* ===== IMÁGENES ===== */
 .gifs{
     display:flex;
     gap:25px;
-    margin:40px 0;
     flex-wrap:wrap;
     justify-content:center;
+    margin-top:40px;
 }
 
 .gifs img{
     width:160px;
-    height:auto;
+    image-rendering:auto;
 }
 
-/* MENSAJE */
+/* ===== MENSAJE ===== */
 .mensaje{
-    max-width:900px;
-    margin-top:40px;
+    max-width:800px;
+    margin:80px auto;
+    background:#0e0e0e;
+    border-radius:20px;
     padding:30px;
-    background:rgba(255,255,255,0.05);
-    border-radius:14px;
 }
 
 .mensaje h2{
@@ -80,72 +108,66 @@ button:hover{
 }
 
 .mensaje p{
-    line-height:1.7;
+    line-height:1.6;
     opacity:0.9;
-}
-
-/* RESPONSIVE */
-@media (max-width:600px){
-    h1{
-        font-size:2.2rem;
-    }
-    .gifs img{
-        width:130px;
-    }
+    margin-bottom:12px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Feliz cumpleaños Melissa</h1>
+<!-- CONFETI -->
+<div class="confetti" id="confetti"></div>
 
-<p class="subtitle">
-Hoy te felicito en este día<br>
-y lo pases bien :D
-</p>
+<!-- HERO -->
+<section class="hero">
+    <h1>Feliz cumpleaños Melissa</h1>
+    <p>Hoy te felicito en este día y lo pases bien :D</p>
+    <button onclick="scrollMensaje()">Comenzar</button>
 
-<button>Comenzar</button>
+    <!-- GIFS -->
+    <div class="gifs">
+        <img src="as.gif" alt="Leon izquierda">
+        <img src="leonkennedy.gif" alt="Leon centro">
+        <img src="leonkennedys.gif" alt="Leon abajo">
+        <img src="xd.gif" alt="Leon divertido">
+    </div>
+</section>
 
-<!-- GIFS -->
-<div class="gifs">
-    <img src="assets/as.gif" alt="">
-    <img src="assets/leonkennedy.gif" alt="">
-    <img src="assets/leonkennedys.gif" alt="">
-    <img src="assets/xd.gif" alt="">
-</div>
-
-<!-- MENSAJE COMPLETO -->
-<div class="mensaje">
+<!-- MENSAJE -->
+<section class="mensaje" id="mensaje">
     <h2>Mensaje</h2>
-
     <p>
-    Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa
-    que no te felicite.
+        Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa que no te felicite.
     </p>
-
     <p>
-    Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real,
-    como lo quieras ver, pero igual. Es simplemente para decirte que se aprecia quién eres,
-    lo especial que eres para mí.
+        Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real, como lo quieras ver, pero igual.
+        Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mí.
     </p>
-
     <p>
-    Me has apoyado en muchos momentos que no sé cómo agradecértelo.
+        Me has apoyado en muchos momentos que no sé cómo agradecértelo.
     </p>
-
-    <p>
-    Feliz cumpleaños, Melissa.
-    </p>
-
-    <p>
-    De parte de Alejandro.
-    </p>
-</div>
+    <p><strong>Feliz cumpleaños, Melissa.</strong></p>
+    <p>De parte de Alejandro.</p>
+</section>
 
 <script>
-// JS listo por si luego quieres animaciones
-console.log("Página cargada correctamente");
+/* ===== CONFETI ===== */
+const confetti = document.getElementById("confetti");
+
+for(let i=0;i<120;i++){
+    const span = document.createElement("span");
+    span.style.left = Math.random()*100 + "%";
+    span.style.animationDuration = 3 + Math.random()*5 + "s";
+    span.style.background = ["#6fffe9","#ff6f91","#f9f871","#845ec2","#00c9a7"][Math.floor(Math.random()*5)];
+    confetti.appendChild(span);
+}
+
+/* ===== SCROLL ===== */
+function scrollMensaje(){
+    document.getElementById("mensaje").scrollIntoView({behavior:"smooth"});
+}
 </script>
 
 </body>
