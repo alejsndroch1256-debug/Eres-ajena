@@ -6,173 +6,53 @@
 <title>Feliz cumpleaños Melissa</title>
 
 <style>
-/* ===== RESET ===== */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-/* ===== BODY ===== */
 body{
+    margin:0;
     min-height:100vh;
     background:#000;
-    color:#fff;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow-x:hidden;
-}
-
-/* ===== CONFETI ===== */
-.confetti{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    z-index:1;
-}
-
-.confetti span{
-    position:absolute;
-    width:8px;
-    height:8px;
-    animation:fall linear infinite;
-}
-
-@keyframes fall{
-    from{
-        transform:translateY(-10vh) rotate(0deg);
-    }
-    to{
-        transform:translateY(110vh) rotate(360deg);
-    }
-}
-
-/* ===== HERO ===== */
-.hero{
-    position:relative;
-    z-index:2;
-    min-height:100vh;
+    color:white;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
+    font-family:Arial, sans-serif;
     text-align:center;
-    padding:20px;
-}
-
-.hero-content{
-    max-width:600px;
 }
 
 h1{
-    font-size:3rem;
     color:#6fffe9;
-    margin-bottom:15px;
+    font-size:3rem;
 }
 
 p{
     opacity:0.8;
-    margin-bottom:25px;
 }
 
-button{
-    padding:12px 28px;
-    font-size:1rem;
-    border:none;
-    border-radius:10px;
-    background:#6fffe9;
-    cursor:pointer;
-}
-
-/* ===== GIFS ===== */
-.gif{
-    position:absolute;
-    width:180px;
-    z-index:2;
-}
-
-.gif.left{
-    left:20px;
-    bottom:120px;
-}
-
-.gif.right{
-    right:20px;
-    bottom:120px;
-}
-
-.bottom{
-    position:absolute;
-    bottom:20px;
-    width:100%;
+.gifs{
     display:flex;
-    justify-content:center;
     gap:20px;
+    margin-top:30px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
-.bottom img{
-    width:200px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-    h1{
-        font-size:2.2rem;
-    }
-
-    .gif{
-        width:130px;
-    }
-
-    .bottom img{
-        width:140px;
-    }
+.gifs img{
+    width:180px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CONFETI -->
-<div class="confetti" id="confetti"></div>
+<h1>Feliz cumpleaños Melissa</h1>
+<p>Hoy te felicito en este día y lo pases bien :D</p>
 
-<!-- CONTENIDO -->
-<section class="hero">
-
-    <!-- GIF IZQUIERDA -->
-    <img src="assets/as.gif" class="gif left" alt="as">
-
-    <!-- GIF DERECHA -->
-    <img src="assets/leonkennedy.gif" class="gif right" alt="leon">
-
-    <div class="hero-content">
-        <h1>Feliz cumpleaños<br>Melissa</h1>
-        <p>Hoy te felicito en este día<br>y lo pases bien :D</p>
-        <button>Comenzar</button>
-    </div>
-
-    <!-- GIFS ABAJO -->
-    <div class="bottom">
-        <img src="assets/leonkennedys.gif" alt="leon abajo">
-        <img src="assets/xd.gif" alt="xd">
-    </div>
-
-</section>
-
-<script>
-/* ===== GENERAR CONFETI ===== */
-const confetti = document.getElementById("confetti");
-const colors = ["#ff4d6d","#ffd166","#06d6a0","#4cc9f0","#c77dff"];
-
-for(let i=0;i<120;i++){
-    const span = document.createElement("span");
-    span.style.left = Math.random()*100 + "vw";
-    span.style.animationDuration = (Math.random()*3 + 2) + "s";
-    span.style.background = colors[Math.floor(Math.random()*colors.length)];
-    confetti.appendChild(span);
-}
-</script>
+<div class="gifs">
+    <img src="assets/as.gif" alt="as">
+    <img src="assets/leonkennedy.gif" alt="leon">
+    <img src="assets/leonkennedys.gif" alt="leon2">
+    <img src="assets/xd.gif" alt="xd">
+</div>
 
 </body>
 </html>
