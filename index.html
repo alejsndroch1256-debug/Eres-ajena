@@ -1,1404 +1,223 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- ============================================================
-    REGALO DE CUMPLEAÑOS - MELISSA
-    Un solo archivo: HTML + CSS + JS
-    - Sin emojis en textos
-    - Decoraciones flotantes (CSS)
-    - Confeti realista (canvas)
-    - Torta con velas animadas (CSS)
-    - Globos, regalos, piñata (CSS)
-    - Estilo gamer/cinemático sin ser "web oficial"
-    - Responsive PC / Laptop / Celular
-    - GIFs con fallback de rutas (assets/ y raíz)
-    ============================================================ -->
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Feliz cumpleaños Melissa</title>
-
-  <!-- Fuente redondeada tipo “cumple” (si no carga, hay fallback) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    /* ============================================================
-      01) RESET + BASE
-      ============================================================ */
-    :root{
-      --bg0:#040507;
-      --bg1:#070a0f;
-      --ink:#e8f0ff;
-      --muted:rgba(232,240,255,.72);
-      --aqua:#6fffe9;
-      --mint:#00f5d4;
-      --vio:#9b5de5;
-      --pink:#ff6fae;
-      --gold:#ffd166;
-      --red:#ff4d6d;
-
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.09);
-      --stroke:rgba(0,0,0,.85);
-      --shadow:rgba(0,0,0,.45);
-
-      --radius:22px;
-      --radius2:16px;
-
-      --max:980px;
-    }
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html,body{
-      height:100%;
-    }
-
-    body{
-      background:
-        radial-gradient(900px 600px at 18% 15%, rgba(111,255,233,.10), transparent 60%),
-        radial-gradient(700px 520px at 85% 25%, rgba(155,93,229,.10), transparent 55%),
-        radial-gradient(900px 700px at 50% 85%, rgba(255,111,174,.09), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      color:var(--ink);
-      font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      overflow-x:hidden;
-    }
-
-    /* Anti “blanco flash” */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background:
-        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.12), transparent 35%),
-        radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,.09), transparent 35%),
-        radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,.12), transparent 35%),
-        radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,.07), transparent 35%);
-      pointer-events:none;
-      opacity:.55;
-      mix-blend-mode:screen;
-      z-index:0;
-    }
-
-    /* ============================================================
-      02) CONFETI (CANVAS LAYER)
-      ============================================================ */
-    #confetti{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:1;
-      pointer-events:none;
-    }
-
-    /* ============================================================
-      03) LAYOUT WRAPPER
-      ============================================================ */
-    .wrap{
-      position:relative;
-      z-index:2;
-      min-height:100%;
-      display:flex;
-      flex-direction:column;
-      gap:44px;
-      padding:64px 18px 80px;
-    }
-
-    .container{
-      width:100%;
-      max-width:var(--max);
-      margin:0 auto;
-    }
-
-    /* ============================================================
-      04) HERO / TITULO “BURBUJA”
-      - Esto reemplaza el estilo que te había removido
-      - Usa fuente redondeada + contorno + sombras
-      ============================================================ */
-    .hero{
-      position:relative;
-      border-radius:26px;
-      padding:44px 20px 34px;
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      box-shadow: 0 28px 60px rgba(0,0,0,.40);
-      overflow:hidden;
-    }
-
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(360px 220px at 20% 18%, rgba(111,255,233,.20), transparent 60%),
-        radial-gradient(320px 240px at 80% 20%, rgba(155,93,229,.18), transparent 60%),
-        radial-gradient(460px 260px at 50% 120%, rgba(255,111,174,.14), transparent 60%);
-      opacity:.75;
-      z-index:0;
-      pointer-events:none;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
-      transform:translateX(-40%);
-      animation:scan 6.5s ease-in-out infinite;
-      opacity:.45;
-      z-index:0;
-      pointer-events:none;
-    }
-
-    @keyframes scan{
-      0%{ transform:translateX(-60%); }
-      50%{ transform:translateX(60%); }
-      100%{ transform:translateX(-60%); }
-    }
-
-    .hero-inner{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:22px;
-      align-items:center;
-      justify-items:center;
-    }
-
-    .title{
-      font-family:"Fredoka", system-ui, Arial, sans-serif;
-      font-weight:700;
-      letter-spacing:1px;
-      line-height:1.02;
-      font-size:clamp(2.4rem, 5.8vw, 4.25rem);
-      color:var(--aqua);
-
-      /* contorno tipo “sticker” */
-      -webkit-text-stroke: 8px var(--stroke);
-      paint-order: stroke fill;
-
-      /* sombras para vibra “burbuja” */
-      text-shadow:
-        0 10px 20px rgba(0,0,0,.35),
-        0 0 26px rgba(111,255,233,.28);
-    }
-
-    /* Fallback si el browser ignora text-stroke */
-    @supports not (-webkit-text-stroke: 1px black){
-      .title{
-        text-shadow:
-          2px 0 0 var(--stroke),
-          -2px 0 0 var(--stroke),
-          0 2px 0 var(--stroke),
-          0 -2px 0 var(--stroke),
-          2px 2px 0 var(--stroke),
-          -2px 2px 0 var(--stroke),
-          2px -2px 0 var(--stroke),
-          -2px -2px 0 var(--stroke),
-          0 10px 20px rgba(0,0,0,.35),
-          0 0 26px rgba(111,255,233,.28);
-      }
-    }
-
-    .subtitle{
-      max-width:760px;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:1.05rem;
-    }
-
-    .subtitle strong{
-      color:rgba(232,240,255,.92);
-      font-weight:600;
-    }
-
-    /* ============================================================
-      05) DECORACIÓN PRINCIPAL: globos + regalos + piñata
-      - No son emojis, son shapes con CSS
-      ============================================================ */
-    .decor-zone{
-      position:relative;
-      width:100%;
-      height:220px;
-      margin-top:8px;
-      display:block;
-    }
-
-    /* Globos (3) */
-    .balloon{
-      position:absolute;
-      width:86px;
-      height:110px;
-      border-radius: 60% 60% 55% 55%;
-      box-shadow: 0 16px 26px rgba(0,0,0,.35);
-      filter:saturate(1.05);
-      transform-origin:50% 100%;
-      animation:float 5.8s ease-in-out infinite;
-    }
-
-    .balloon::before{
-      content:"";
-      position:absolute;
-      inset:10px 14px 22px 14px;
-      border-radius: 60% 60% 55% 55%;
-      background: radial-gradient(120px 90px at 30% 25%, rgba(255,255,255,.55), transparent 55%);
-      opacity:.6;
-      pointer-events:none;
-    }
-
-    .balloon::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      bottom:-18px;
-      width:2px;
-      height:66px;
-      background:rgba(232,240,255,.32);
-      transform:translateX(-50%);
-      box-shadow:0 0 12px rgba(111,255,233,.12);
-    }
-
-    @keyframes float{
-      0%{ transform:translateY(0) rotate(-2deg); }
-      50%{ transform:translateY(-10px) rotate(2deg); }
-      100%{ transform:translateY(0) rotate(-2deg); }
-    }
-
-    .b1{
-      left:10px;
-      top:22px;
-      background: linear-gradient(180deg, rgba(255,111,174,1), rgba(255,77,109,1));
-      animation-delay:.1s;
-    }
-    .b2{
-      left:110px;
-      top:60px;
-      background: linear-gradient(180deg, rgba(111,255,233,1), rgba(0,245,212,1));
-      animation-delay:.35s;
-    }
-    .b3{
-      right:18px;
-      top:28px;
-      background: linear-gradient(180deg, rgba(155,93,229,1), rgba(111,255,233,.9));
-      animation-delay:.2s;
-    }
-
-    /* Regalos (2) */
-    .gift{
-      position:absolute;
-      width:110px;
-      height:95px;
-      border-radius:16px;
-      box-shadow: 0 18px 30px rgba(0,0,0,.38);
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-      animation:bounce 2.8s ease-in-out infinite;
-      transform-origin:50% 100%;
-    }
-
-    .gift::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg,
-          transparent 0 44%,
-          rgba(255,255,255,.20) 44% 56%,
-          transparent 56% 100%);
-      opacity:.45;
-    }
-
-    .gift::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:0;
-      width:100%;
-      height:14px;
-      transform:translateX(-50%);
-      background:rgba(0,0,0,.20);
-      opacity:.25;
-    }
-
-    .ribbon{
-      position:absolute;
-      left:50%;
-      top:-12px;
-      width:64px;
-      height:38px;
-      transform:translateX(-50%);
-    }
-
-    .ribbon::before,
-    .ribbon::after{
-      content:"";
-      position:absolute;
-      top:10px;
-      width:28px;
-      height:18px;
-      border-radius: 18px 18px 4px 18px;
-      background:rgba(255,255,255,.22);
-      border:1px solid rgba(255,255,255,.18);
-      box-shadow:0 10px 16px rgba(0,0,0,.25);
-    }
-
-    .ribbon::before{
-      left:2px;
-      transform:rotate(-18deg);
-    }
-
-    .ribbon::after{
-      right:2px;
-      border-radius: 18px 18px 18px 4px;
-      transform:rotate(18deg);
-    }
-
-    @keyframes bounce{
-      0%,100%{ transform:translateY(0); }
-      50%{ transform:translateY(-6px); }
-    }
-
-    .g1{
-      right:148px;
-      bottom:22px;
-      background:linear-gradient(180deg, rgba(255,209,102,.22), rgba(255,111,174,.14));
-      animation-delay:.15s;
-    }
-    .g2{
-      left:240px;
-      bottom:14px;
-      background:linear-gradient(180deg, rgba(111,255,233,.18), rgba(155,93,229,.12));
-      animation-delay:.35s;
-    }
-
-    /* Piñata */
-    .pinata{
-      position:absolute;
-      left:50%;
-      top:18px;
-      transform:translateX(-50%);
-      width:86px;
-      height:108px;
-      border-radius:18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)),
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,77,109,.35) 0 12px,
-          rgba(255,209,102,.32) 12px 24px,
-          rgba(111,255,233,.28) 24px 36px,
-          rgba(155,93,229,.28) 36px 48px
-        );
-      box-shadow: 0 18px 34px rgba(0,0,0,.38);
-      border:1px solid rgba(255,255,255,.10);
-      transform-origin:50% 0%;
-      animation:swing 3.4s ease-in-out infinite;
-    }
-
-    .pinata::before{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:-48px;
-      width:2px;
-      height:48px;
-      background:rgba(232,240,255,.30);
-      transform:translateX(-50%);
-    }
-
-    .pinata::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      bottom:-18px;
-      width:58px;
-      height:18px;
-      transform:translateX(-50%);
-      background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-      border-radius: 0 0 16px 16px;
-      opacity:.75;
-    }
-
-    @keyframes swing{
-      0%{ transform:translateX(-50%) rotate(-4deg); }
-      50%{ transform:translateX(-50%) rotate(4deg); }
-      100%{ transform:translateX(-50%) rotate(-4deg); }
-    }
-
-    /* ============================================================
-      06) TORTA + VELAS (CSS)
-      ============================================================ */
-    .cake-wrap{
-      display:flex;
-      justify-content:center;
-      margin:18px 0 8px;
-    }
-
-    .cake{
-      position:relative;
-      width:280px;
-      height:190px;
-      filter: drop-shadow(0 28px 26px rgba(0,0,0,.45));
-    }
-
-    .cake-base{
-      position:absolute;
-      left:50%;
-      bottom:0;
-      transform:translateX(-50%);
-      width:260px;
-      height:110px;
-      border-radius: 22px 22px 18px 18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06)),
-        radial-gradient(140px 70px at 30% 25%, rgba(255,209,102,.18), transparent 60%),
-        radial-gradient(160px 90px at 70% 45%, rgba(255,111,174,.14), transparent 60%);
-      border:1px solid rgba(255,255,255,.12);
-      overflow:hidden;
-    }
-
-    .cake-base::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(111,255,233,.12) 0 14px,
-          rgba(155,93,229,.10) 14px 28px
-        );
-      opacity:.35;
-      mix-blend-mode:screen;
-    }
-
-    .cake-top{
-      position:absolute;
-      left:50%;
-      bottom:90px;
-      transform:translateX(-50%);
-      width:230px;
-      height:58px;
-      border-radius: 18px 18px 16px 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
-      border:1px solid rgba(255,255,255,.12);
-    }
-
-    .icing{
-      position:absolute;
-      left:50%;
-      bottom:134px;
-      transform:translateX(-50%);
-      width:240px;
-      height:38px;
-      border-radius: 16px 16px 18px 18px;
-      background:
-        linear-gradient(180deg, rgba(255,111,174,.22), rgba(255,255,255,.06));
-      border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-    }
-
-    .icing::before{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      top:10px;
-      height:26px;
-      background:
-        radial-gradient(18px 14px at 12% 10%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(18px 14px at 28% 20%, rgba(255,255,255,.16), transparent 60%),
-        radial-gradient(18px 14px at 44% 10%, rgba(255,255,255,.16), transparent 60%),
-        radial-gradient(18px 14px at 60% 18%, rgba(255,255,255,.16), transparent 60%),
-        radial-gradient(18px 14px at 76% 12%, rgba(255,255,255,.16), transparent 60%),
-        radial-gradient(18px 14px at 90% 18%, rgba(255,255,255,.16), transparent 60%);
-      opacity:.85;
-    }
-
-    .plate{
-      position:absolute;
-      left:50%;
-      bottom:-10px;
-      transform:translateX(-50%);
-      width:290px;
-      height:40px;
-      border-radius: 40px;
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.10);
-      opacity:.85;
-    }
-
-    /* Velas */
-    .candles{
-      position:absolute;
-      left:50%;
-      bottom:148px;
-      transform:translateX(-50%);
-      display:flex;
-      gap:18px;
-      align-items:flex-end;
-    }
-
-    .candle{
-      position:relative;
-      width:14px;
-      height:40px;
-      border-radius: 8px;
-      background:
-        repeating-linear-gradient(
-          180deg,
-          rgba(255,255,255,.16) 0 6px,
-          rgba(0,0,0,.10) 6px 12px
-        ),
-        linear-gradient(180deg, rgba(111,255,233,.35), rgba(155,93,229,.28));
-      border:1px solid rgba(255,255,255,.12);
-    }
-
-    .wick{
-      position:absolute;
-      left:50%;
-      top:-7px;
-      transform:translateX(-50%);
-      width:2px;
-      height:8px;
-      background:rgba(232,240,255,.55);
-    }
-
-    .flame{
-      position:absolute;
-      left:50%;
-      top:-22px;
-      transform:translateX(-50%);
-      width:14px;
-      height:18px;
-      border-radius: 12px 12px 12px 12px;
-      background: radial-gradient(10px 12px at 50% 55%, rgba(255,209,102,1), rgba(255,77,109,.9));
-      filter: drop-shadow(0 0 12px rgba(255,209,102,.55));
-      animation:flicker 1.2s ease-in-out infinite;
-    }
-
-    @keyframes flicker{
-      0%{ transform:translateX(-50%) scale(1) rotate(-2deg); opacity:.92; }
-      50%{ transform:translateX(-50%) scale(1.12) rotate(2deg); opacity:1; }
-      100%{ transform:translateX(-50%) scale(1) rotate(-2deg); opacity:.92; }
-    }
-
-    /* ============================================================
-      07) SECCIONES (MENSAJE / RECUERDOS / LOGS / CIERRE)
-      ============================================================ */
-    .section{
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 22px 50px rgba(0,0,0,.35);
-      overflow:hidden;
-    }
-
-    .section .inner{
-      padding:30px 20px;
-    }
-
-    .h2{
-      font-weight:700;
-      letter-spacing:.4px;
-      font-size:1.28rem;
-      color:rgba(232,240,255,.92);
-      margin-bottom:14px;
-    }
-
-    .p{
-      color:var(--muted);
-      line-height:1.7;
-      font-size:1.03rem;
-      max-width:860px;
-      margin:0 auto;
-      text-align:left;
-    }
-
-    .p + .p{ margin-top:12px; }
-
-    /* Tarjeta tipo “carta” */
-    .letter{
-      margin-top:16px;
-      padding:18px 16px;
-      border-radius: var(--radius2);
-      background:rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.09);
-      text-align:left;
-    }
-
-    .letter strong{
-      color:rgba(232,240,255,.94);
-      font-weight:700;
-    }
-
-    /* ============================================================
-      08) RECUERDOS (placeholders)
-      ============================================================ */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
-      margin-top:18px;
-    }
-
-    .card{
-      grid-column: span 6;
-      padding:16px;
-      border-radius: var(--radius2);
-      background: rgba(0,0,0,.24);
-      border:1px solid rgba(255,255,255,.10);
-      text-align:left;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(220px 120px at 20% 15%, rgba(111,255,233,.10), transparent 60%),
-        radial-gradient(240px 140px at 80% 70%, rgba(255,111,174,.10), transparent 60%);
-      opacity:.7;
-      pointer-events:none;
-    }
-
-    .card .meta{
-      position:relative;
-      z-index:1;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
-
-    .tag{
-      font-size:.82rem;
-      color:rgba(232,240,255,.78);
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-    }
-
-    .badge{
-      font-size:.78rem;
-      color:rgba(232,240,255,.75);
-      opacity:.9;
-    }
-
-    .placeholder{
-      position:relative;
-      z-index:1;
-      height:160px;
-      border-radius: 14px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-      border:1px dashed rgba(255,255,255,.20);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:rgba(232,240,255,.78);
-      line-height:1.3;
-      padding:12px;
-      text-align:center;
-    }
-
-    .card .desc{
-      position:relative;
-      z-index:1;
-      margin-top:10px;
-      color:rgba(232,240,255,.72);
-      line-height:1.5;
-      font-size:.95rem;
-    }
-
-    /* Hover (PC) */
-    @media (hover:hover){
-      .card{
-        transition: transform .25s ease, box-shadow .25s ease;
-      }
-      .card:hover{
-        transform: translateY(-4px);
-        box-shadow: 0 22px 44px rgba(0,0,0,.45);
-      }
-    }
-
-    /* ============================================================
-      09) LOGS / REGISTROS
-      ============================================================ */
-    .logs{
-      margin-top:14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .log{
-      border-radius: 14px;
-      padding:12px 14px;
-      background:rgba(0,0,0,.26);
-      border:1px solid rgba(255,255,255,.10);
-      text-align:left;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .log::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, transparent, rgba(111,255,233,.08), transparent);
-      transform:translateX(-30%);
-      animation:logscan 7s ease-in-out infinite;
-      opacity:.55;
-      pointer-events:none;
-    }
-
-    @keyframes logscan{
-      0%{ transform:translateX(-60%); }
-      50%{ transform:translateX(60%); }
-      100%{ transform:translateX(-60%); }
-    }
-
-    .log .k{
-      position:relative;
-      z-index:1;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      font-size:.92rem;
-      color:rgba(232,240,255,.88);
-      font-weight:700;
-      letter-spacing:.2px;
-      margin-bottom:6px;
-    }
-
-    .dot{
-      width:8px;
-      height:8px;
-      border-radius:99px;
-      background:var(--aqua);
-      box-shadow:0 0 16px rgba(111,255,233,.35);
-    }
-
-    .log .v{
-      position:relative;
-      z-index:1;
-      color:rgba(232,240,255,.76);
-      line-height:1.5;
-      font-size:.96rem;
-    }
-
-    /* ============================================================
-      10) GIFs DE LEON (posición PC / Celular)
-      ============================================================ */
-    .leon-sides{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      z-index:2;
-    }
-
-    .leon{
-      position:absolute;
-      width:180px;
-      height:auto;
-      filter: drop-shadow(0 18px 18px rgba(0,0,0,.45));
-      opacity:.98;
-    }
-
-    .leon.left{
-      left:16px;
-      top:56%;
-      transform:translateY(-50%);
-    }
-
-    .leon.right{
-      right:16px;
-      top:56%;
-      transform:translateY(-50%);
-    }
-
-    /* Debajo del mensaje (los dos juntos) */
-    .leon-bottom{
-      margin-top:18px;
-      display:flex;
-      justify-content:center;
-      gap:28px;
-      flex-wrap:wrap;
-    }
-
-    .leon-bottom img{
-      width:300px;
-      max-width:92%;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.18);
-      box-shadow: 0 18px 40px rgba(0,0,0,.40);
-    }
-
-    /* Mobile layout: los laterales pasan a arriba dentro del hero */
-    @media (max-width: 860px){
-      .leon-sides{ display:none; }
-      .hero-inner{ gap:18px; }
-    }
-
-    .leon-mobile{
-      display:none;
-      gap:16px;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
-
-    .leon-mobile img{
-      width:150px;
-      max-width:44vw;
-      filter: drop-shadow(0 16px 16px rgba(0,0,0,.45));
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.12);
-    }
-
-    @media (max-width: 860px){
-      .leon-mobile{ display:flex; }
-    }
-
-    /* ============================================================
-      11) ANIMACIONES DE ENTRADA (scroll reveal)
-      ============================================================ */
-    .reveal{
-      opacity:0;
-      transform: translateY(14px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-    .reveal.on{
-      opacity:1;
-      transform: translateY(0);
-    }
-
-    /* ============================================================
-      12) FOOTER / CIERRE
-      ============================================================ */
-    .closing{
-      padding:24px 18px 10px;
-      text-align:center;
-      color:rgba(232,240,255,.70);
-      font-size:.95rem;
-    }
-
-    .closing .line{
-      margin:0 auto 14px;
-      height:1px;
-      max-width:760px;
-      background:linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
-    }
-
-    /* ============================================================
-      13) RESPONSIVE FINO
-      ============================================================ */
-    @media (max-width: 680px){
-      .hero{
-        padding:34px 14px 28px;
-      }
-      .decor-zone{
-        height:240px;
-      }
-      .cake{
-        transform:scale(.95);
-      }
-      .grid{
-        gap:12px;
-      }
-      .card{
-        grid-column: span 12;
-      }
-      .p{
-        text-align:left;
-      }
-    }
-
-    /* ============================================================
-      14) UTILIDADES PEQUEÑAS
-      ============================================================ */
-    .spacer{
-      height:10px;
-    }
-
-    .note{
-      margin-top:10px;
-      font-size:.90rem;
-      color:rgba(232,240,255,.60);
-      line-height:1.45;
-      text-align:left;
-    }
-
-    /* Evita selección fea en mobile */
-    img{
-      -webkit-user-drag:none;
-      user-select:none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz cumpleaños Melissa</title>
+
+<!-- FUENTE ESTILO DIBUJADO -->
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+<style>
+/* ================= RESET ================= */
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:#000;
+    color:#fff;
+    font-family:Arial, sans-serif;
+    overflow-x:hidden;
+}
+
+/* ================= CONFETI ================= */
+.confetti{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1;
+}
+
+.confetti span{
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:var(--c);
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{transform:translateY(-10vh) rotate(0deg);}
+    to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ================= HERO ================= */
+.hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px 20px;
+    z-index:2;
+}
+
+.hero h1{
+    font-family:'Luckiest Guy', cursive;
+    font-size:clamp(2.5rem,6vw,4.5rem);
+    color:#6fffe9;
+    text-shadow:0 0 15px rgba(111,255,233,.6);
+}
+
+.hero p{
+    margin-top:15px;
+    opacity:.85;
+    font-size:1.1rem;
+}
+
+/* ================= GIFS POSICIÓN ================= */
+.gif{
+    position:absolute;
+    width:160px;
+    max-width:30vw;
+}
+
+.left{left:10px; top:40%;}
+.right{right:10px; top:40%;}
+.bottom{
+    position:relative;
+    margin-top:50px;
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+/* ================= MENSAJE ================= */
+.section{
+    padding:80px 20px;
+    display:flex;
+    justify-content:center;
+}
+
+.card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:40px;
+    max-width:800px;
+    width:100%;
+    text-align:center;
+}
+
+.card h2{
+    color:#6fffe9;
+    margin-bottom:20px;
+}
+
+.card p{
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+/* ================= RECUERDOS ================= */
+.recuerdos{
+    padding:60px 20px;
+    text-align:center;
+}
+
+.recuerdos h2{
+    color:#6fffe9;
+    margin-bottom:30px;
+}
+
+.rec-grid{
+    display:flex;
+    gap:25px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.rec-grid img{
+    width:220px;
+    max-width:90vw;
+    border-radius:15px;
+    box-shadow:0 0 25px rgba(255,255,255,.15);
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    .gif{
+        position:static;
+        margin:20px auto;
+        display:block;
+    }
+    .left,.right{
+        top:auto;
+        left:auto;
+        right:auto;
+    }
+}
+</style>
 </head>
 
 <body>
-  <!-- Confeti realista -->
-  <canvas id="confetti"></canvas>
 
-  <div class="wrap">
-    <!-- ==========================================================
-      HERO
-      ========================================================== -->
-    <section class="container hero reveal" id="top">
-      <!-- Leon laterales (PC) -->
-      <div class="leon-sides" aria-hidden="true">
-        <img class="leon left"  id="gifLeft"  alt="" />
-        <img class="leon right" id="gifRight" alt="" />
-      </div>
+<!-- CONFETI -->
+<div class="confetti" id="confetti"></div>
 
-      <div class="hero-inner">
-        <h1 class="title">Feliz cumpleaños Melissa</h1>
+<!-- HERO -->
+<section class="hero">
+    <img src="as.gif" class="gif left" alt="">
+    <div>
+        <h1>Feliz cumpleaños Melissa</h1>
+        <p>Hoy te felicito en este día<br>y lo pases bien :D</p>
 
-        <p class="subtitle">
-          Esto es un regalo hecho con dedicación.
-          Fondo oscuro, luz suave, confeti realista y detalles de fiesta.
-          <strong>Sin texto con emojis</strong>, pero con decoración visual para que se sienta celebración.
-        </p>
-
-        <!-- Leon mobile (para que SI se vean en celular) -->
-        <div class="leon-mobile" aria-hidden="true">
-          <img id="gifLeftM"  alt="" />
-          <img id="gifRightM" alt="" />
+        <div class="bottom">
+            <img src="leonkennedys.gif" alt="">
+            <img src="xd.gif" alt="">
         </div>
+    </div>
+    <img src="leonkennedy.gif" class="gif right" alt="">
+</section>
 
-        <!-- Decoración de fiesta (CSS shapes) -->
-        <div class="decor-zone" aria-hidden="true">
-          <div class="balloon b1"></div>
-          <div class="balloon b2"></div>
-          <div class="balloon b3"></div>
-
-          <div class="pinata"></div>
-
-          <div class="gift g1">
-            <div class="ribbon"></div>
-          </div>
-
-          <div class="gift g2">
-            <div class="ribbon"></div>
-          </div>
-        </div>
-
-        <!-- Torta -->
-        <div class="cake-wrap" aria-hidden="true">
-          <div class="cake">
-            <div class="icing"></div>
-            <div class="candles">
-              <div class="candle">
-                <div class="wick"></div>
-                <div class="flame"></div>
-              </div>
-              <div class="candle">
-                <div class="wick"></div>
-                <div class="flame" style="animation-delay:.12s"></div>
-              </div>
-              <div class="candle">
-                <div class="wick"></div>
-                <div class="flame" style="animation-delay:.24s"></div>
-              </div>
-              <div class="candle">
-                <div class="wick"></div>
-                <div class="flame" style="animation-delay:.18s"></div>
-              </div>
-            </div>
-            <div class="cake-top"></div>
-            <div class="cake-base"></div>
-            <div class="plate"></div>
-          </div>
-        </div>
-
-        <div class="spacer"></div>
-
-        <p class="note">
-          Nota: tus GIFs se cargan automáticamente desde <strong>assets/</strong> o desde la raíz.
-          Si alguna vez los mueves, esta página sigue funcionando.
-        </p>
-      </div>
-    </section>
-
-    <!-- ==========================================================
-      MENSAJE (TU TEXTO)
-      ========================================================== -->
-    <section class="container section reveal" id="mensaje">
-      <div class="inner">
-        <div class="h2">Mensaje</div>
-
-        <div class="letter">
-          <p class="p">
+<!-- MENSAJE -->
+<section class="section">
+    <div class="card">
+        <h2>Mensaje</h2>
+        <p>
             Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa que no te felicite.
-          </p>
-          <p class="p">
-            Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real, como lo quieras ver, pero igual.
-            Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mí.
-          </p>
-          <p class="p">
+        </p>
+        <p>
+            Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real, como lo quieras ver,
+            pero igual. Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mí.
+        </p>
+        <p>
             Me has apoyado en muchos momentos que no sé cómo agradecértelo.
-          </p>
-          <p class="p">
-            <strong>Feliz cumpleaños, Melissa.</strong><br>
-            De parte de Alejandro.
-          </p>
-        </div>
-
-        <!-- Los 2 GIF grandes debajo del mensaje -->
-        <div class="leon-bottom">
-          <img id="gifBottomA" alt="" />
-          <img id="gifBottomB" alt="" />
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================================
-      RECUERDOS / ARCHIVOS (Placeholders fáciles de reemplazar)
-      ========================================================== -->
-    <section class="container section reveal" id="recuerdos">
-      <div class="inner">
-        <div class="h2">Recuerdos / Archivos</div>
-
-        <p class="p">
-          Aquí puedes reemplazar fácilmente los placeholders por tus fotos o videos.
-          No hay contenido real aún: está preparado para que metas tus archivos después.
         </p>
+        <p><strong>Feliz cumpleaños, Melissa.</strong></p>
+        <p>De parte de Alejandro.</p>
+    </div>
+</section>
 
-        <div class="grid">
-          <!-- CARD 1 -->
-          <article class="card">
-            <div class="meta">
-              <span class="tag">ARCHIVO 01</span>
-              <span class="badge">FOTO</span>
-            </div>
-            <div class="placeholder">
-              Reemplaza esto por una imagen<br>
-              Ejemplo: &lt;img src="tu-foto.jpg"&gt;
-            </div>
-            <div class="desc">
-              Texto opcional: qué representa este recuerdo.
-            </div>
-          </article>
+<!-- RECUERDOS -->
+<section class="recuerdos">
+    <h2>Recuerdos</h2>
+    <div class="rec-grid">
+        <img src="leonkennedys.gif" alt="">
+        <img src="xd.gif" alt="">
+    </div>
+</section>
 
-          <!-- CARD 2 -->
-          <article class="card">
-            <div class="meta">
-              <span class="tag">ARCHIVO 02</span>
-              <span class="badge">VIDEO</span>
-            </div>
-            <div class="placeholder">
-              Reemplaza esto por un video<br>
-              Ejemplo: &lt;video controls src="tu-video.mp4"&gt;
-            </div>
-            <div class="desc">
-              Texto opcional: detalle del momento.
-            </div>
-          </article>
+<!-- JS CONFETI -->
+<script>
+const confetti=document.getElementById("confetti");
+const colors=["#6fffe9","#ffd166","#ef476f","#8338ec","#06d6a0"];
 
-          <!-- CARD 3 -->
-          <article class="card">
-            <div class="meta">
-              <span class="tag">ARCHIVO 03</span>
-              <span class="badge">FOTO</span>
-            </div>
-            <div class="placeholder">
-              Placeholder de foto
-            </div>
-            <div class="desc">
-              Texto opcional.
-            </div>
-          </article>
+for(let i=0;i<120;i++){
+    const s=document.createElement("span");
+    s.style.left=Math.random()*100+"vw";
+    s.style.animationDuration=3+Math.random()*5+"s";
+    s.style.background=colors[Math.floor(Math.random()*colors.length)];
+    confetti.appendChild(s);
+}
+</script>
 
-          <!-- CARD 4 -->
-          <article class="card">
-            <div class="meta">
-              <span class="tag">ARCHIVO 04</span>
-              <span class="badge">VIDEO</span>
-            </div>
-            <div class="placeholder">
-              Placeholder de video
-            </div>
-            <div class="desc">
-              Texto opcional.
-            </div>
-          </article>
-        </div>
-
-        <p class="note">
-          Consejo: si usas GitHub Pages, sube tus fotos/videos al repositorio y enlázalos con su ruta.
-        </p>
-      </div>
-    </section>
-
-    <!-- ==========================================================
-      REGISTROS / LOGS (estilo gamer, pero con esencia de cumple)
-      ========================================================== -->
-    <section class="container section reveal" id="logs">
-      <div class="inner">
-        <div class="h2">Registros</div>
-
-        <p class="p">
-          Detalles dedicados a Melissa presentados como logs. Sin exagerar, sin romanticismo,
-          con vibra tranquila y celebratoria.
-        </p>
-
-        <div class="logs">
-          <div class="log">
-            <div class="k"><span class="dot"></span>LOG 01</div>
-            <div class="v">Hoy es tu día. Que se sienta ligero, bonito y con buena energía.</div>
-          </div>
-
-          <div class="log">
-            <div class="k"><span class="dot"></span>LOG 02</div>
-            <div class="v">Gracias por los momentos compartidos. Se aprecia lo real, sin ruido.</div>
-          </div>
-
-          <div class="log">
-            <div class="k"><span class="dot"></span>LOG 03</div>
-            <div class="v">Este regalo está hecho para que te rías, te guste y te quede de recuerdo.</div>
-          </div>
-
-          <div class="log">
-            <div class="k"><span class="dot"></span>LOG 04</div>
-            <div class="v">Que tu nuevo año venga con cosas buenas, y que las malas se queden atrás.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================================
-      CIERRE
-      ========================================================== -->
-    <section class="container section reveal" id="cierre">
-      <div class="inner">
-        <div class="h2">Cierre</div>
-
-        <p class="p">
-          Listo. Un regalo simple, con detalle, pensado para verse bien en celular y en computadora.
-          Confeti, torta, decoración y recuerdos listos para que los completes con tus fotos y videos.
-        </p>
-
-        <p class="note">
-          Si quieres, después te lo convierto en “libro de recuerdos” con páginas, botones y transiciones suaves.
-        </p>
-      </div>
-    </section>
-
-    <footer class="container closing">
-      <div class="line"></div>
-      <div>Hecho con dedicación.</div>
-    </footer>
-  </div>
-
-  <script>
-    /* ============================================================
-      JS: CONFETI REALISTA (CANVAS)
-      - Sin emojis en texto
-      - Partículas con gravedad + rotación + drift
-      ============================================================ */
-
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-
-    const DPR = Math.min(2, window.devicePixelRatio || 1);
-
-    function resizeCanvas(){
-      canvas.width  = Math.floor(window.innerWidth * DPR);
-      canvas.height = Math.floor(window.innerHeight * DPR);
-      canvas.style.width  = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    const CONFETTI_COLORS = [
-      "#6fffe9",
-      "#00f5d4",
-      "#9b5de5",
-      "#ff6fae",
-      "#ffd166",
-      "#ff4d6d"
-    ];
-
-    function rand(min, max){ return Math.random() * (max - min) + min; }
-    function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
-
-    const confetti = [];
-    const CONFETTI_COUNT = 160;
-
-    function spawnConfetti(){
-      confetti.length = 0;
-
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-
-      for(let i=0;i<CONFETTI_COUNT;i++){
-        confetti.push({
-          x: rand(0, w),
-          y: rand(-h, 0),
-          w: rand(6, 12),
-          h: rand(6, 12),
-          vx: rand(-0.6, 0.6),
-          vy: rand(1.4, 3.4),
-          rot: rand(0, Math.PI * 2),
-          vr: rand(-0.08, 0.08),
-          color: pick(CONFETTI_COLORS),
-          alpha: rand(0.65, 0.98),
-          swing: rand(0.6, 1.6),
-          seed: rand(0, 9999)
-        });
-      }
-    }
-
-    spawnConfetti();
-
-    function drawConfetti(){
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-
-      ctx.clearRect(0,0,w,h);
-
-      for(const p of confetti){
-        // movimiento
-        p.y += p.vy;
-        p.x += p.vx + Math.sin((p.y + p.seed) * 0.02) * p.swing * 0.25;
-        p.rot += p.vr;
-
-        // reciclar
-        if(p.y > h + 20){
-          p.y = rand(-80, -20);
-          p.x = rand(0, w);
-        }
-        if(p.x < -30) p.x = w + 30;
-        if(p.x > w + 30) p.x = -30;
-
-        // dibujar (rectangulitos rotando)
-        ctx.save();
-        ctx.globalAlpha = p.alpha;
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
-        ctx.fillStyle = p.color;
-
-        // sombra suave
-        ctx.shadowColor = "rgba(0,0,0,.25)";
-        ctx.shadowBlur = 6;
-
-        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-        ctx.restore();
-      }
-
-      requestAnimationFrame(drawConfetti);
-    }
-
-    requestAnimationFrame(drawConfetti);
-
-    /* ============================================================
-      JS: SCROLL REVEAL
-      ============================================================ */
-    const reveals = Array.from(document.querySelectorAll(".reveal"));
-
-    const io = new IntersectionObserver((entries)=>{
-      for(const e of entries){
-        if(e.isIntersecting){
-          e.target.classList.add("on");
-          io.unobserve(e.target);
-        }
-      }
-    }, { threshold: 0.12 });
-
-    reveals.forEach(el=>io.observe(el));
-
-    /* ============================================================
-      JS: CARGA DE GIFs CON FALLBACK DE RUTA
-      - Intenta "assets/archivo.gif"
-      - Si falla, intenta "./archivo.gif"
-      ============================================================ */
-
-    function setGifWithFallback(imgEl, fileName){
-      const tryA = "assets/" + fileName;
-      const tryB = fileName; // raíz
-
-      // Primer intento
-      imgEl.src = tryA;
-
-      imgEl.onerror = () => {
-        // segundo intento
-        imgEl.onerror = null;
-        imgEl.src = tryB;
-      };
-    }
-
-    // Lados PC
-    const gifLeft   = document.getElementById("gifLeft");
-    const gifRight  = document.getElementById("gifRight");
-
-    // Mobile
-    const gifLeftM  = document.getElementById("gifLeftM");
-    const gifRightM = document.getElementById("gifRightM");
-
-    // Abajo del mensaje (grandes)
-    const gifBottomA = document.getElementById("gifBottomA");
-    const gifBottomB = document.getElementById("gifBottomB");
-
-    // Asignación exacta como pediste:
-    // as.gif (izquierda) + leonkennedy.gif (derecha)
-    // leonkennedys.gif + xd.gif (abajo del mensaje)
-    setGifWithFallback(gifLeft,  "as.gif");
-    setGifWithFallback(gifRight, "leonkennedy.gif");
-
-    setGifWithFallback(gifLeftM,  "as.gif");
-    setGifWithFallback(gifRightM, "leonkennedy.gif");
-
-    setGifWithFallback(gifBottomA, "leonkennedys.gif");
-    setGifWithFallback(gifBottomB, "xd.gif");
-
-    /* ============================================================
-      JS: PEQUEÑO DETALLE “HAPPY VIBE”
-      - Brillo suave del título en loop
-      ============================================================ */
-    const title = document.querySelector(".title");
-    let t = 0;
-
-    function titleGlow(){
-      t += 0.015;
-      const pulse = (Math.sin(t) + 1) / 2; // 0..1
-      const glow = 18 + pulse * 14;
-
-      title.style.textShadow =
-        `0 10px 20px rgba(0,0,0,.35), 0 0 ${glow}px rgba(111,255,233,.28)`;
-
-      requestAnimationFrame(titleGlow);
-    }
-
-    requestAnimationFrame(titleGlow);
-
-    /* ============================================================
-      EXTRA: SI QUIERES MÁS “FIESTA”
-      - puedes subir CONFETTI_COUNT
-      - o aumentar el tamaño de regalos/globos
-      ============================================================ */
-  </script>
 </body>
 </html>
