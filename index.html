@@ -6,177 +6,53 @@
 <title>Feliz cumpleaños Melissa</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family: "Segoe UI", Arial, sans-serif;
-}
-
 body{
-    background:#050505;
-    color:white;
-    overflow-x:hidden;
-}
-
-/* CONFETI */
-.confetti{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:1;
-}
-.confetti span{
-    position:absolute;
-    width:8px;
-    height:8px;
-    background: hsl(var(--h),90%,60%);
-    animation: fall linear infinite;
-}
-@keyframes fall{
-    from{transform:translateY(-10vh) rotate(0deg);}
-    to{transform:translateY(110vh) rotate(360deg);}
-}
-
-/* HERO */
-.hero{
+    margin:0;
     min-height:100vh;
+    background:#000;
+    color:white;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
+    font-family:Arial, sans-serif;
     text-align:center;
-    position:relative;
-    z-index:2;
-    padding:40px 20px;
 }
 
-.hero h1{
-    font-size:clamp(2.5rem,6vw,4rem);
+h1{
     color:#6fffe9;
-    margin-bottom:15px;
+    font-size:3rem;
 }
 
-.hero p{
-    opacity:.8;
-    margin-bottom:25px;
+p{
+    opacity:0.8;
 }
 
-.hero button{
-    background:#6fffe9;
-    border:none;
-    padding:14px 30px;
-    border-radius:10px;
-    font-size:1rem;
-    cursor:pointer;
-}
-
-/* GIFS LATERALES */
-.gif{
-    position:absolute;
-    max-width:180px;
-}
-.left{left:20px; bottom:80px;}
-.right{right:20px; bottom:80px;}
-
-/* SECCIONES */
-section{
-    padding:80px 20px;
-    max-width:900px;
-    margin:auto;
-    position:relative;
-    z-index:2;
-}
-
-section h2{
-    margin-bottom:15px;
-    color:#6fffe9;
-}
-
-/* GIFS ABAJO */
-.bottom{
+.gifs{
     display:flex;
     gap:20px;
+    margin-top:30px;
+    flex-wrap:wrap;
     justify-content:center;
-    margin-top:40px;
-}
-.bottom img{
-    max-width:200px;
-    border-radius:12px;
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-    .gif{
-        position:static;
-        margin:20px auto;
-        display:block;
-    }
-    .bottom{
-        flex-direction:column;
-        align-items:center;
-    }
+.gifs img{
+    width:180px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CONFETI -->
-<div class="confetti" id="confetti"></div>
+<h1>Feliz cumpleaños Melissa</h1>
+<p>Hoy te felicito en este día y lo pases bien :D</p>
 
-<!-- HERO -->
-<section class="hero" id="inicio">
-    <div>
-        <h1>Feliz cumpleaños<br>Melissa</h1>
-        <p>Hoy te felicito en este día<br>y lo pases bien! :D</p>
-        <button onclick="document.getElementById('mensaje').scrollIntoView({behavior:'smooth'})">
-            Comenzar
-        </button>
-    </div>
-
-    <!-- GIFS -->
-    <img src="assets/as.gif" class="gif left" alt="Leon izquierda">
-    <img src="assets/leonkennedy.gif" class="gif right" alt="Leon derecha">
-</section>
-
-<!-- MENSAJE -->
-<section id="mensaje">
-    <h2>Mensaje</h2>
-    <p>
-        Hoy en este día cumples un año más, sé que estamos distantes,
-        pero eso no significa que no te felicite.
-        <br><br>
-        Este mensaje lo hice para demostrar que aún te considero
-        alguien especial. Gracias por el apoyo y los momentos compartidos.
-        <br><br>
-        Feliz cumpleaños, Melissa.<br>
-        — Alejandro
-    </p>
-</section>
-
-<!-- RECUERDOS -->
-<section id="recuerdos">
-    <h2>Recuerdos</h2>
-    <p>Aquí luego puedes agregar fotos o videos.</p>
-
-    <div class="bottom">
-        <img src="assets/leonkennedys.gif" alt="Leon abajo">
-        <img src="assets/xd.gif" alt="Leon abajo 2">
-    </div>
-</section>
-
-<script>
-/* CONFETI JS */
-const confetti = document.getElementById("confetti");
-for(let i=0;i<120;i++){
-    const s=document.createElement("span");
-    s.style.left=Math.random()*100+"vw";
-    s.style.animationDuration=3+Math.random()*5+"s";
-    s.style.animationDelay=Math.random()*5+"s";
-    s.style.setProperty("--h",Math.random()*360);
-    confetti.appendChild(s);
-}
-</script>
+<div class="gifs">
+    <img src="assets/as.gif" alt="as">
+    <img src="assets/leonkennedy.gif" alt="leon">
+    <img src="assets/leonkennedys.gif" alt="leon2">
+    <img src="assets/xd.gif" alt="xd">
+</div>
 
 </body>
 </html>
