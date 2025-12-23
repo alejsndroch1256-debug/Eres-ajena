@@ -6,14 +6,12 @@
 <title>Feliz cumpleaños Melissa</title>
 
 <style>
-/* ===== RESET ===== */
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-/* ===== BODY ===== */
 body{
     min-height:100vh;
     background:#000;
@@ -67,30 +65,34 @@ body{
 
 .hero p{
     opacity:0.8;
-    margin-bottom:20px;
-}
-
-.hero button{
-    background:#6fffe9;
-    border:none;
-    padding:12px 30px;
-    border-radius:12px;
-    font-size:1rem;
-    cursor:pointer;
+    margin-bottom:30px;
 }
 
 /* ===== IMÁGENES ===== */
-.gifs{
+.img-left{
+    position:absolute;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    width:160px;
+}
+
+.img-right{
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    width:160px;
+}
+
+.img-bottom{
     display:flex;
-    gap:25px;
-    flex-wrap:wrap;
-    justify-content:center;
+    gap:30px;
     margin-top:40px;
 }
 
-.gifs img{
-    width:160px;
-    image-rendering:auto;
+.img-bottom img{
+    width:150px;
 }
 
 /* ===== MENSAJE ===== */
@@ -122,21 +124,26 @@ body{
 
 <!-- HERO -->
 <section class="hero">
-    <h1>Feliz cumpleaños Melissa</h1>
-    <p>Hoy te felicito en este día y lo pases bien :D</p>
-    <button onclick="scrollMensaje()">Comenzar</button>
 
-    <!-- GIFS -->
-    <div class="gifs">
-        <img src="as.gif" alt="Leon izquierda">
-        <img src="leonkennedy.gif" alt="Leon centro">
+    <!-- IZQUIERDA -->
+    <img src="as.gif" class="img-left" alt="Leon izquierda">
+
+    <!-- DERECHA -->
+    <img src="leonkennedy.gif" class="img-right" alt="Leon derecha">
+
+    <h1>Feliz cumpleaños Melissa</h1>
+    <p>Hoy te felicito en este día<br>y lo pases bien :D</p>
+
+    <!-- ABAJO -->
+    <div class="img-bottom">
         <img src="leonkennedys.gif" alt="Leon abajo">
-        <img src="xd.gif" alt="Leon divertido">
+        <img src="xd.gif" alt="Leon abajo 2">
     </div>
+
 </section>
 
 <!-- MENSAJE -->
-<section class="mensaje" id="mensaje">
+<section class="mensaje">
     <h2>Mensaje</h2>
     <p>
         Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa que no te felicite.
@@ -153,7 +160,6 @@ body{
 </section>
 
 <script>
-/* ===== CONFETI ===== */
 const confetti = document.getElementById("confetti");
 
 for(let i=0;i<120;i++){
@@ -162,11 +168,6 @@ for(let i=0;i<120;i++){
     span.style.animationDuration = 3 + Math.random()*5 + "s";
     span.style.background = ["#6fffe9","#ff6f91","#f9f871","#845ec2","#00c9a7"][Math.floor(Math.random()*5)];
     confetti.appendChild(span);
-}
-
-/* ===== SCROLL ===== */
-function scrollMensaje(){
-    document.getElementById("mensaje").scrollIntoView({behavior:"smooth"});
 }
 </script>
 
