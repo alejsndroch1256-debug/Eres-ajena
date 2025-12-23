@@ -2,10 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Feliz cumpleaños Melissa</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz cumpleaños Melissa</title>
 
 <style>
+/* ================= BASE ================= */
 *{
     box-sizing:border-box;
     margin:0;
@@ -16,61 +17,87 @@ body{
     background:#000;
     color:#fff;
     font-family:Arial, sans-serif;
+    text-align:center;
     overflow-x:hidden;
 }
 
-/* ===== CONFETI ===== */
-#confetti{
+/* ================= CONFETI ================= */
+.confetti{
     position:fixed;
     inset:0;
-    z-index:0;
-}
-
-/* ===== CONTENEDOR ===== */
-.container{
-    position:relative;
-    z-index:2;
-    min-height:100vh;
-    padding:80px 20px 60px;
-    text-align:center;
-}
-
-/* ===== TITULO ===== */
-.title{
-    font-size:clamp(2.8rem,6vw,4.2rem);
-    color:#6fffe9;
-    letter-spacing:2px;
-    text-shadow:
-        3px 3px 0 #00bfa6,
-        -3px -3px 0 #00bfa6;
-    margin-bottom:15px;
-}
-
-/* ===== SUBTITULO ===== */
-.subtitle{
-    opacity:.85;
-    margin-bottom:40px;
-    line-height:1.5;
-}
-
-/* ===== GIFS LATERALES ===== */
-.gif{
-    position:fixed;
-    bottom:140px;
-    width:190px;
+    pointer-events:none;
     z-index:1;
 }
 
-.gif.left{ left:20px; }
-.gif.right{ right:20px; }
+.confetti span{
+    position:absolute;
+    width:8px;
+    height:8px;
+    animation:fall linear infinite;
+}
 
-/* ===== MENSAJE ===== */
+@keyframes fall{
+    from{ transform:translateY(-10vh) rotate(0deg); }
+    to{ transform:translateY(110vh) rotate(360deg); }
+}
+
+/* ================= CONTENIDO ================= */
+main{
+    position:relative;
+    z-index:2;
+    padding:80px 20px;
+}
+
+h1{
+    font-size:3rem;
+    color:#6fffe9;
+    text-shadow:0 0 15px #6fffe9;
+    margin-bottom:15px;
+}
+
+.subtitle{
+    opacity:.8;
+    margin-bottom:25px;
+}
+
+button{
+    background:#6fffe9;
+    color:#000;
+    border:none;
+    padding:12px 28px;
+    border-radius:10px;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+/* ================= GIFS ================= */
+.gif{
+    position:absolute;
+    width:180px;
+}
+
+.gif.left{ left:20px; top:40%; }
+.gif.right{ right:20px; top:40%; }
+
+.bottom-gifs{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    margin:60px 0;
+}
+
+.bottom-gifs img{
+    width:220px;
+    border-radius:12px;
+}
+
+/* ================= MENSAJE ================= */
 .message-box{
     max-width:900px;
-    margin:0 auto;
+    margin:0 auto 80px;
     padding:35px;
+    background:rgba(255,255,255,0.06);
     border-radius:20px;
-    background:rgba(255,255,255,.06);
     backdrop-filter:blur(6px);
 }
 
@@ -79,121 +106,83 @@ body{
     margin-bottom:20px;
 }
 
-.message-box p{
-    line-height:1.7;
-    margin-bottom:15px;
-}
-
-.firma{
-    margin-top:25px;
-    color:#6fffe9;
-    font-weight:bold;
-}
-
-/* ===== IMÁGENES INFERIORES ===== */
-.bottom-images{
-    margin-top:40px;
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    flex-wrap:wrap;
-}
-
-.bottom-images img{
-    width:300px;
-    max-width:90%;
-    border-radius:12px;
-}
-
-/* ===== RESPONSIVE ===== */
+/* ================= RESPONSIVE (CELULAR) ================= */
 @media(max-width:768px){
-    .gif{ display:none; }
+
+    h1{ font-size:2.2rem; }
+
+    .gif{
+        position:static;
+        width:130px;
+        margin:20px auto;
+        display:block;
+    }
+
+    .bottom-gifs{
+        flex-direction:column;
+        align-items:center;
+        gap:20px;
+    }
+
+    .bottom-gifs img{
+        width:260px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="confetti"></canvas>
+<!-- CONFETI -->
+<div class="confetti" id="confetti"></div>
 
-<!-- IZQUIERDA -->
+<!-- GIFS LATERALES -->
 <img src="as.gif" class="gif left" alt="Leon izquierda">
-
-<!-- DERECHA -->
 <img src="leonkennedy.gif" class="gif right" alt="Leon derecha">
 
-<div class="container">
+<main>
+    <h1>Feliz cumpleaños Melissa</h1>
+    <p class="subtitle">Hoy te felicito en este día<br>y lo pases bien :D</p>
 
-    <h1 class="title">Feliz cumpleaños Melissa</h1>
+    <button>Comenzar</button>
 
-    <p class="subtitle">
-        Hoy te felicito en este día<br>
-        y lo pases bien :D
-    </p>
-
-    <section class="message-box">
-        <h2>Mensaje</h2>
-
-        <p>
-            Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa que no te felicite.
-        </p>
-
-        <p>
-            Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real, como lo quieras ver, pero igual.
-            Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mí.
-        </p>
-
-        <p>
-            Me has apoyado en muchos momentos que no sé cómo agradecértelo.
-        </p>
-
-        <p class="firma">
-            Feliz cumpleaños, Melissa.<br>
-            De parte de Alejandro.
-        </p>
-    </section>
-
-    <!-- IMÁGENES ABAJO -->
-    <div class="bottom-images">
-        <img src="leonkennedys.gif" alt="Leon abajo 1">
+    <!-- GIFS ABAJO -->
+    <div class="bottom-gifs">
+        <img src="leonkennedys.gif" alt="Leon abajo">
         <img src="xd.gif" alt="Leon abajo 2">
     </div>
 
-</div>
+    <!-- MENSAJE -->
+    <div class="message-box">
+        <h2>Mensaje</h2>
+        <p>
+            Hoy en este día cumples un año más, sé que estamos distantes pero eso no significa que no te felicite.
+            <br><br>
+            Este mensaje lo hice para demostrar que aún te considero mi amiga, o mi real, como lo quieras ver, pero igual.
+            Es simplemente para decirte que se aprecia quién eres, lo especial que eres para mí.
+            <br><br>
+            Me has apoyado en muchos momentos que no sé cómo agradecértelo.
+            <br><br>
+            <strong>Feliz cumpleaños, Melissa.</strong>
+            <br><br>
+            De parte de Alejandro.
+        </p>
+    </div>
+</main>
 
 <script>
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
+/* CONFETI JS */
+const confetti = document.getElementById("confetti");
+const colors = ["#6fffe9","#ff5fa2","#ffd166","#9b5de5","#00f5d4"];
 
-function resize(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+for(let i=0;i<120;i++){
+    const s = document.createElement("span");
+    s.style.left = Math.random()*100+"vw";
+    s.style.background = colors[Math.floor(Math.random()*colors.length)];
+    s.style.animationDuration = 3+Math.random()*4+"s";
+    s.style.opacity = Math.random();
+    confetti.appendChild(s);
 }
-resize();
-window.addEventListener("resize", resize);
-
-const confetti = Array.from({length:130}).map(() => ({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    s:Math.random()*4+2,
-    v:Math.random()*2+1,
-    c:`hsl(${Math.random()*360},100%,60%)`
-}));
-
-function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    confetti.forEach(p=>{
-        ctx.fillStyle=p.c;
-        ctx.fillRect(p.x,p.y,p.s,p.s);
-        p.y+=p.v;
-        if(p.y>canvas.height){
-            p.y=-10;
-            p.x=Math.random()*canvas.width;
-        }
-    });
-    requestAnimationFrame(draw);
-}
-draw();
 </script>
 
 </body>
