@@ -15,7 +15,7 @@ const lines = [
     "Eres ajena (ajena)",         
     "Sigues siendo ajena (ajena)",
     "Eres ajena (ajena)",
-    "Sigues siendo ajena (ajena)" // <-- ÚNICAMENTE ESTA será un poco más fluida
+    "Sigues siendo ajena (ajena)"
 ];
 
 let lineIdx = 0;
@@ -24,17 +24,15 @@ let isPlaying = false;
 
 function type() {
     if (lineIdx < lines.length) {
-        
         let currentTypingSpeed;
         
-        // Solo la ULTIMA frase (posición 12) va un poco más rápido (60ms)
-        // Todo lo demás del coro (desde la 9 a la 11) se queda en lento (100ms)
+        // Mantenemos tu lógica exacta de velocidades
         if (lineIdx === 12) { 
-            currentTypingSpeed = 60; 
+            currentTypingSpeed = 70; // Un pelín más lento que antes para el celular
         } else if (lineIdx >= 9) {
-            currentTypingSpeed = 100;
+            currentTypingSpeed = 110; // Coro lento estable
         } else {
-            currentTypingSpeed = 40;
+            currentTypingSpeed = 50; // Inicio estable
         }
 
         if (charIdx < lines[lineIdx].length) {
@@ -44,11 +42,11 @@ function type() {
         } else {
             let pause;
             if (lineIdx === 8) {
-                pause = 2000; // Tus 2 segundos intactos
+                pause = 2000; // Tus 2 segundos de espera
             } else if (lineIdx >= 9) {
-                pause = 1500; // Pausa lenta para el coro
+                pause = 1500; // Pausa del coro
             } else {
-                pause = 800;
+                pause = 900;  // Pausa inicial
             }
 
             setTimeout(() => {
@@ -65,7 +63,7 @@ window.addEventListener('click', () => {
     if (!isPlaying) {
         isPlaying = true;
         statusText.style.display = 'none';
-        audio.play();
+        audio.play().catch(e => console.log("Error al reproducir:", e));
         type();
     }
 });
