@@ -31,7 +31,7 @@ function type() {
             } else if (lineIdx >= 9) {
                 pause = 1800; // MODIFICA AQUÍ (Pausa entre frases del coro)
             } else {
-                pause = 1200; // MODIFICA AQUÍ (Pausa entre frases del inicio)
+                pause = 1000; // MODIFICA AQUÍ (Pausa entre frases del inicio)
             }
 
             setTimeout(() => {
@@ -54,3 +54,4 @@ window.addEventListener('click', () => {
         setTimeout(type, 500); // MODIFICA AQUÍ
     }
 });
+
