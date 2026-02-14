@@ -2,38 +2,30 @@ body {
     background-color: #000;
     color: #fff;
     margin: 0;
-    /* Ajuste de altura para pantallas alargadas como la tuya */
-    height: 100vh; 
+    height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: 'Arial Black', sans-serif;
     overflow: hidden;
-    /* Evita que el usuario haga zoom por error al tocar */
-    touch-action: none; 
 }
 
 .container {
     text-align: center;
-    width: 85%; /* Dejamos margen a los lados para que no choque con los bordes */
+    width: 90%;
 }
 
 #lyrics {
-    /* 10vw asegura que en tu resolución de 720px de ancho la letra sea grande */
-    font-size: 10vw; 
+    font-size: 10vw; /* Tamaño ideal para tu pantalla de 720px de ancho */
     text-transform: uppercase;
     margin: 0;
-    line-height: 1.1;
-    /* Un ligero resplandor para que destaque en la grabación */
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    line-height: 1.2;
 }
 
 #status {
     position: absolute;
-    top: 10%;
-    font-size: 14px;
-    color: #444;
-    letter-spacing: 4px;
-    text-transform: uppercase;
+    top: 50px;
+    font-size: 12px;
+    color: #333;
+    letter-spacing: 3px;
 }
