@@ -8,6 +8,7 @@ body {
     align-items: center;
     font-family: 'Arial Black', sans-serif;
     overflow: hidden;
+    touch-action: manipulation; /* Optimiza el toque en celular */
 }
 
 .container {
@@ -16,21 +17,15 @@ body {
 }
 
 #lyrics {
-    font-size: 3.5rem; /* Un poco más grande para que impacte */
+    font-size: 8vw; /* Tamaño dinámico: se ajusta solo si es PC o Celular */
     text-transform: uppercase;
     margin: 0;
-    letter-spacing: 2px;
-}
-
-/* Eliminamos el cursor por completo */
-.cursor {
-    display: none;
+    line-height: 1.2;
 }
 
 #status {
-    font-size: 0.8rem;
+    font-size: 12px;
     color: #333;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
     margin-bottom: 20px;
-    text-transform: uppercase;
 }
