@@ -26,13 +26,13 @@ function type() {
     if (lineIdx < lines.length) {
         let currentTypingSpeed;
         
-        // --- VELOCIDAD CALIBRADA ---
+        // --- VALORES DE PRECISIÓN ---
         if (lineIdx === 12) { 
-            currentTypingSpeed = 65; // El final que querías, ni lento ni rápido
+            currentTypingSpeed = 55; // La última línea un poco más rápida para cerrar perfecto
         } else if (lineIdx >= 9) {
-            currentTypingSpeed = 100; // Velocidad estándar del coro
+            currentTypingSpeed = 85; // Coro: Ni muy lento ni muy rápido
         } else {
-            currentTypingSpeed = 45; // Versos rápidos del inicio
+            currentTypingSpeed = 40; // Inicio dinámico
         }
 
         if (charIdx < lines[lineIdx].length) {
@@ -42,11 +42,11 @@ function type() {
         } else {
             let pause;
             if (lineIdx === 8) {
-                pause = 2000; // Tus 2 segundos exactos
+                pause = 1900; // Ajustado para que el "Eres ajena (ajena)" entre a tiempo
             } else if (lineIdx >= 9) {
-                pause = 1400; // Pausa para que el coro no se amontone
+                pause = 1300; // Pausas más cortas para evitar el retraso en móvil
             } else {
-                pause = 800;
+                pause = 700;
             }
 
             setTimeout(() => {
