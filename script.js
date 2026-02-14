@@ -12,23 +12,19 @@ let lineIdx = 0, charIdx = 0, isPlaying = false;
 
 function type() {
     if (lineIdx < lines.length) {
-        // Velocidades de escritura
-        let speed = (lineIdx === 12) ? 60 : (lineIdx >= 9) ? 100 : 45;
+        // VELOCIDADES DE ESCRITURA RÁPIDAS
+        let speed = (lineIdx === 12) ? 50 : (lineIdx >= 9) ? 80 : 35;
 
         if (charIdx < lines[lineIdx].length) {
             lyricsElement.innerHTML += lines[lineIdx].charAt(charIdx);
             charIdx++;
             setTimeout(type, speed);
         } else {
-            // --- AQUÍ ESTÁ EL ARREGLO DE LOS 2 SEGUNDOS ---
             let pause;
-            if (lineIdx === 8) {
-                pause = 2000; // Solo aquí esperamos 2 segundos (antes del coro)
-            } else if (lineIdx >= 9) {
-                pause = 1000; // Pausa más corta en el coro para que no se atrase
-            } else {
-                pause = 300;  // CAMBIO RÁPIDO para las primeras frases
-            }
+            if (lineIdx === 4) { pause = 400; }  // "ay mama" cambio rápido
+            else if (lineIdx === 8) { pause = 1800; } // Espera del coro (un pelín menos de 2s)
+            else if (lineIdx >= 9) { pause = 800; }  // Coro: cambio de frase rápido
+            else { pause = 200; } // Versos: cambio casi instantáneo
 
             setTimeout(() => {
                 lyricsElement.innerHTML = "";
