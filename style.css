@@ -1,0 +1,36 @@
+body {
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial Black', sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    width: 90%;
+}
+
+#lyrics {
+    font-size: 3.5rem; /* Un poco más grande para que impacte */
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+/* Eliminamos el cursor por completo */
+.cursor {
+    display: none;
+}
+
+#status {
+    font-size: 0.8rem;
+    color: #333;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
