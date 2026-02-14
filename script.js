@@ -1,45 +1,41 @@
-const lyricsElement = document.getElementById('lyrics');
+const lyrics = document.getElementById('lyrics');
 const audio = document.getElementById('track');
-const statusText = document.getElementById('status');
+const status = document.getElementById('status');
 
-const lines = [
-    "Me rompiste el corazón", "Jugaste con mi amor", "Ajena", "Eres ajena", "ay mama",
-    "Me rompiste el corazón", "Jugaste con mi amor", "Ajena", "Eres ajena", 
-    "Eres ajena (ajena)", "Sigues siendo ajena (ajena)", "Eres ajena (ajena)", "Sigues siendo ajena (ajena)"
+// AQUÍ CONTROLAS EL TIEMPO EXACTO
+const tiempos = [
+    { s: 0.5, t: "Me rompiste el corazón" },
+    { s: 2.8, t: "Jugaste con mi amor" },
+    { s: 4.8, t: "Ajena" },
+    { s: 6.5, t: "Eres ajena" },
+    { s: 8.5, t: "ay mama" },
+    { s: 10.5, t: "Me rompiste el corazón" },
+    { s: 12.8, t: "Jugaste con mi amor" },
+    { s: 14.8, t: "Ajena" },
+    { s: 16.5, t: "Eres ajena" }, // Aquí queda en negro los 2 segs antes del coro
+    { s: 19.0, t: "Eres ajena (ajena)" },
+    { s: 21.5, t: "Sigues siendo ajena (ajena)" },
+    { s: 24.0, t: "Eres ajena (ajena)" },
+    { s: 26.5, t: "Sigues siendo ajena (ajena)" }
 ];
 
-let lineIdx = 0, charIdx = 0, isPlaying = false;
+audio.ontimeupdate = () => {
+    let current = audio.currentTime;
+    let activeLine = "";
 
-function type() {
-    if (lineIdx < lines.length) {
-        // VELOCIDADES DE ESCRITURA RÁPIDAS
-        let speed = (lineIdx === 12) ? 50 : (lineIdx >= 9) ? 80 : 35;
-
-        if (charIdx < lines[lineIdx].length) {
-            lyricsElement.innerHTML += lines[lineIdx].charAt(charIdx);
-            charIdx++;
-            setTimeout(type, speed);
-        } else {
-            let pause;
-            if (lineIdx === 4) { pause = 400; }  // "ay mama" cambio rápido
-            else if (lineIdx === 8) { pause = 1800; } // Espera del coro (un pelín menos de 2s)
-            else if (lineIdx >= 9) { pause = 800; }  // Coro: cambio de frase rápido
-            else { pause = 200; } // Versos: cambio casi instantáneo
-
-            setTimeout(() => {
-                lyricsElement.innerHTML = "";
-                charIdx = 0; lineIdx++;
-                type();
-            }, pause);
+    tiempos.forEach((linea, i) => {
+        if (current >= linea.s) {
+            activeLine = linea.t;
         }
-    }
-}
+    });
 
-window.addEventListener('click', () => {
-    if (!isPlaying) {
-        isPlaying = true;
-        statusText.style.display = 'none';
-        audio.play();
-        type();
-    }
-});
+    // Limpia la pantalla entre el "Eres ajena" (16.5) y el coro (19.0)
+    if (current > 17.8 && current < 19.0) activeLine = "";
+
+    lyrics.innerHTML = activeLine;
+};
+
+window.onclick = () => {
+    status.style.display = 'none';
+    audio.play();
+};
