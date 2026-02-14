@@ -26,13 +26,13 @@ function type() {
     if (lineIdx < lines.length) {
         let currentTypingSpeed;
         
-        // Mantenemos tu lógica exacta de velocidades
+        // --- HEMOS SUBIDO LOS TIEMPOS PARA FRENAR LA VELOCIDAD EN MÓVIL ---
         if (lineIdx === 12) { 
-            currentTypingSpeed = 70; // Un pelín más lento que antes para el celular
+            currentTypingSpeed = 90; // Antes 60, ahora 90 para que no corra al final
         } else if (lineIdx >= 9) {
-            currentTypingSpeed = 110; // Coro lento estable
+            currentTypingSpeed = 140; // Antes 100, ahora 140 para que sea realmente LENTO
         } else {
-            currentTypingSpeed = 50; // Inicio estable
+            currentTypingSpeed = 70; // Antes 40, ahora 70 para el inicio
         }
 
         if (charIdx < lines[lineIdx].length) {
@@ -42,11 +42,13 @@ function type() {
         } else {
             let pause;
             if (lineIdx === 8) {
-                pause = 2000; // Tus 2 segundos de espera
+                // Mantenemos tus 2 segundos, pero si el móvil sigue rápido, 
+                // puedes subir este 2000 a 2200.
+                pause = 2000; 
             } else if (lineIdx >= 9) {
-                pause = 1500; // Pausa del coro
+                pause = 1800; // Pausa más larga entre frases del coro
             } else {
-                pause = 900;  // Pausa inicial
+                pause = 1000; // Pausa más larga al inicio
             }
 
             setTimeout(() => {
@@ -63,7 +65,7 @@ window.addEventListener('click', () => {
     if (!isPlaying) {
         isPlaying = true;
         statusText.style.display = 'none';
-        audio.play().catch(e => console.log("Error al reproducir:", e));
+        audio.play().catch(e => console.log("Error:", e));
         type();
     }
 });
