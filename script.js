@@ -26,13 +26,13 @@ function type() {
     if (lineIdx < lines.length) {
         let currentTypingSpeed;
         
-        // TIEMPOS AJUSTADOS PARA ANDROID (ZTE)
+        // --- VELOCIDAD CALIBRADA ---
         if (lineIdx === 12) { 
-            currentTypingSpeed = 85; // Final fluido pero controlado
+            currentTypingSpeed = 65; // El final que querías, ni lento ni rápido
         } else if (lineIdx >= 9) {
-            currentTypingSpeed = 150; // Coro bien lento para que no se adelante
+            currentTypingSpeed = 100; // Velocidad estándar del coro
         } else {
-            currentTypingSpeed = 75; // Versos iniciales
+            currentTypingSpeed = 45; // Versos rápidos del inicio
         }
 
         if (charIdx < lines[lineIdx].length) {
@@ -42,11 +42,11 @@ function type() {
         } else {
             let pause;
             if (lineIdx === 8) {
-                pause = 2100; // Un pelín más de 2 seg para asegurar el drop
+                pause = 2000; // Tus 2 segundos exactos
             } else if (lineIdx >= 9) {
-                pause = 1900; // Pausa generosa en el coro
+                pause = 1400; // Pausa para que el coro no se amontone
             } else {
-                pause = 1100; 
+                pause = 800;
             }
 
             setTimeout(() => {
@@ -63,7 +63,7 @@ window.addEventListener('click', () => {
     if (!isPlaying) {
         isPlaying = true;
         statusText.style.display = 'none';
-        audio.play().catch(e => console.log("Error:", e));
+        audio.play();
         type();
     }
 });
